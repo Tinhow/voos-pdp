@@ -31,7 +31,7 @@ public class Voo {
     public void adicionarPassageiro(Passageiro passageiro) {
         if (passageiros.size() < aeronave.getAssentosDisponiveis()) {
             passageiros.add(passageiro);
-            System.out.println("Passageiro " + passageiro + " adicionado ao voo " + codigoVoo);
+            System.out.println("Passageiro " + passageiro + " adicionado ao voo " + codigoVoo + ", ainda há " + (aeronave.getAssentosDisponiveis() - passageiros.size()) + " assentos disponíveis.");
         } else {
             System.out.println("Não há assentos disponíveis para o passageiro " + passageiro);
         }
@@ -57,6 +57,7 @@ public class Voo {
 
     public void atualizarHorarioPartidaChegada(Date novaData) {
         this.partida = novaData;
+        notificarPassageiros(codigoVoo + " teve seu horário de partida alterado para " + novaData);
     }
 
     public void notificarPassageiro(Passageiro passageiro, String mensagem) {
