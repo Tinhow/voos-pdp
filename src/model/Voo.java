@@ -1,7 +1,6 @@
 package model;
 
 import notifications.Contato;
-import notifications.StatusVoo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class Voo {
     private String codigoVoo;
-    private StatusVoo status;
+    private EstadoVoo estado;
     private String origem;
     private String destino;
     private Date partida;
@@ -18,14 +17,14 @@ public class Voo {
 
     private List<Passageiro> passageiros = new ArrayList<>();
 
-    public Voo(String codigoVoo, String origem, String destino, Date partida, Date chegada, Aeronave aeronave) {
+    public Voo(String codigoVoo, String origem, String destino, Date partida, Date chegada, Aeronave aeronave, EstadoVoo estado) {
         this.codigoVoo = codigoVoo;
         this.origem = origem;
         this.destino = destino;
         this.partida = partida;
         this.chegada = chegada;
         this.aeronave = aeronave;
-        this.status = StatusVoo.PROGRAMADO;
+        this.estado = new Programado();
     }
 
     public void adicionarPassageiro(Passageiro passageiro) {
@@ -37,19 +36,18 @@ public class Voo {
         }
     }
 
-    public void alterarStatus(StatusVoo novoStatus) {
-        this.status = novoStatus;
-        notificarPassageiros("Status do voo alterado para: " + novoStatus);
+    public void alterarStatus(EstadoVoo novoEstado) {
+        this.estado = novoEstado;
+        estado.handle(this);
     }
 
     public void notificarPassageiros(String mensagem) {
         passageiros.forEach(passageiro -> passageiro.notificar(mensagem));
     }
 
-    public StatusVoo getStatus() {
-        return status;
+    public EstadoVoo getEstadoVoo() {
+        return estado;
     }
-
 
     public Passageiro[] getPassageiros() {
         return passageiros.toArray(new Passageiro[0]);
@@ -57,12 +55,18 @@ public class Voo {
 
     public void atualizarHorarioPartidaChegada(Date novaData) {
         this.partida = novaData;
-        notificarPassageiros(codigoVoo + " teve seu horário de partida alterado para " + novaData);
     }
 
     public void notificarPassageiro(Passageiro passageiro, String mensagem) {
         passageiro.notificar(mensagem);
     }
 
+    public String getCodigoVoo() {
+        return codigoVoo;
+    }
+
+    public Date getPartida() {
+        return partida;
+    }
 }
 
