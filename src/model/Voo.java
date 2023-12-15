@@ -14,7 +14,7 @@ public class Voo implements Observable {
     private Date chegada;
     private Aeronave aeronave;
 
-    // Lista de passageiros
+    // observers que na verdade é uma lista de passageiros
     private List<Observer> observers = new ArrayList<>();
 
     public Voo(String codigoVoo, String origem, String destino, Date partida, Date chegada, Aeronave aeronave, EstadoVoo estado) {

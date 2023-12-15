@@ -4,6 +4,7 @@ import model.Confirmado;
 import model.Passageiro;
 import model.Programado;
 import model.Voo;
+import notifications.AppContato;
 import notifications.EmailContato;
 import notifications.SMSContato;
 
@@ -18,14 +19,18 @@ public class Main {
         List<String> tiposNotificacoes = new ArrayList<>();
         tiposNotificacoes.add("email");
         tiposNotificacoes.add("sms");
+        tiposNotificacoes.add("app");
 
-        // Criar uma aeronave
+        //fluxo de funcionamento da aplicação,
+        //note que a aeronave foi criada com apenas 1 assento disponível
+        //para que o fluxo de funcionamento da aplicação seja mais rápido
+        //mostrando que o passageiro 1 foi adicionado ao voo e recebe as notificações
+        //e o passageiro 2 não foi adicionado ao voo por falta de assentos
+
         Aeronave boeing737 = new Aeronave(1, "Boeing 737 MAX 8");
 
-        // Criar um voo
         Voo vooGLO2103 = new Voo("GLO2103", "JPA", "BSB", new Date(), new Date(), boeing737, new Programado());
 
-        // Criar passageiros
         Passageiro passageiro1 = new Passageiro("Paulo");
 
         while (passageiro1.getContatoPreferencial() == null) {
@@ -44,6 +49,8 @@ public class Main {
                 System.out.println("Digite seu número de telefone:");
                 String telefone = scanner.next();
                 passageiro1.adicionarContato(new SMSContato(telefone));
+            } else if (opcao == 3) {
+                passageiro1.adicionarContato(new AppContato());
             } else {
                 System.out.println("Opção inválida.");
             }
@@ -66,33 +73,28 @@ public class Main {
                 System.out.println("Digite seu número de telefone:");
                 String telefone = scanner.next();
                 passageiro2.adicionarContato(new SMSContato(telefone));
+            } else if (opcao == 3) {
+                passageiro1.adicionarContato(new AppContato());
             } else {
                 System.out.println("Opção inválida.");
             }
         }
 
-
-        // Comprar bilhetes
         passageiro1.comprarBilhete(vooGLO2103);
         passageiro2.comprarBilhete(vooGLO2103);
 
         vooGLO2103.notificarPassageiro(passageiro1, "Olá " + passageiro1.getNome() + ", seu voo está programado para partir às " + vooGLO2103.getPartida() + ".");
 
-        // Alterar status do voo
         vooGLO2103.alterarStatus(new Atrasado());
 
-        // Digitar mensagem relativa ao status do voo
         String mensagem = "O voo está atrasado devido a condições climáticas.";
 
-        // Notificar passageiros
         vooGLO2103.notifyObservers(mensagem);
 
-        //altera status do voo
         vooGLO2103.alterarStatus(new Confirmado());
 
         String mensagem2 = "O voo está confirmado.";
 
-        // Notificar passageiros
         vooGLO2103.notifyObservers(mensagem2);
 
         scanner.close();
