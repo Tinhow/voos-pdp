@@ -13,6 +13,6 @@ public class Atrasado implements EstadoVoo {
     SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     String partida = formatador.format(dataPartida);
 
-    voo.notificarPassageiros("Voo " + voo.getCodigoVoo() + " atrasado para " + partida);
+    voo.notifyObservers("Voo " + voo.getCodigoVoo() + " atrasado para " + partida);
   }
 }

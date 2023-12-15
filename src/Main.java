@@ -20,7 +20,7 @@ public class Main {
         tiposNotificacoes.add("sms");
 
         // Criar uma aeronave
-        Aeronave boeing737 = new Aeronave(162, "Boeing 737 MAX 8");
+        Aeronave boeing737 = new Aeronave(1, "Boeing 737 MAX 8");
 
         // Criar um voo
         Voo vooGLO2103 = new Voo("GLO2103", "JPA", "BSB", new Date(), new Date(), boeing737, new Programado());
@@ -49,34 +49,34 @@ public class Main {
             }
         }
 
-        // Passageiro passageiro2 = new Passageiro("Marcos");
+        Passageiro passageiro2 = new Passageiro("Marcos");
 
-        // while (passageiro2.getContatoPreferencial() == null) {
-        //     System.out.println("Olá, " + passageiro2.getNome() + ", como você deseja ser contactado?");
-        //     for (int i = 0; i < tiposNotificacoes.size(); i++) {
-        //         System.out.println((i + 1) + " - " + tiposNotificacoes.get(i));
-        //     }
-        //     int opcao = scanner.nextInt();
+        while (passageiro2.getContatoPreferencial() == null) {
+            System.out.println("Olá, " + passageiro2.getNome() + ", como você deseja ser contactado?");
+            for (int i = 0; i < tiposNotificacoes.size(); i++) {
+                System.out.println((i + 1) + " - " + tiposNotificacoes.get(i));
+            }
+            int opcao = scanner.nextInt();
 
-        //     if (opcao == 1) {
-        //         System.out.println("Digite seu e-mail:");
-        //         String email = scanner.next();
-        //         passageiro2.adicionarContato(new EmailContato(email));
-        //     } else if (opcao == 2) {
-        //         System.out.println("Digite seu número de telefone:");
-        //         String telefone = scanner.next();
-        //         passageiro2.adicionarContato(new SMSContato(telefone));
-        //     } else {
-        //         System.out.println("Opção inválida.");
-        //     }
-        // }
+            if (opcao == 1) {
+                System.out.println("Digite seu e-mail:");
+                String email = scanner.next();
+                passageiro2.adicionarContato(new EmailContato(email));
+            } else if (opcao == 2) {
+                System.out.println("Digite seu número de telefone:");
+                String telefone = scanner.next();
+                passageiro2.adicionarContato(new SMSContato(telefone));
+            } else {
+                System.out.println("Opção inválida.");
+            }
+        }
 
 
         // Comprar bilhetes
         passageiro1.comprarBilhete(vooGLO2103);
-        // passageiro2.comprarBilhete(vooGLO2103);
+        passageiro2.comprarBilhete(vooGLO2103);
 
-        vooGLO2103.notificarPassageiros("Olá " + passageiro1.getNome() + ", seu voo está programado para partir às " + vooGLO2103.getPartida() + ".");
+        vooGLO2103.notificarPassageiro(passageiro1, "Olá " + passageiro1.getNome() + ", seu voo está programado para partir às " + vooGLO2103.getPartida() + ".");
 
         // Alterar status do voo
         vooGLO2103.alterarStatus(new Atrasado());
@@ -85,7 +85,7 @@ public class Main {
         String mensagem = "O voo está atrasado devido a condições climáticas.";
 
         // Notificar passageiros
-        vooGLO2103.notificarPassageiros(mensagem);
+        vooGLO2103.notifyObservers(mensagem);
 
         //altera status do voo
         vooGLO2103.alterarStatus(new Confirmado());
@@ -93,7 +93,7 @@ public class Main {
         String mensagem2 = "O voo está confirmado.";
 
         // Notificar passageiros
-        vooGLO2103.notificarPassageiros(mensagem2);
+        vooGLO2103.notifyObservers(mensagem2);
 
         scanner.close();
     }

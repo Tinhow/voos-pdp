@@ -12,6 +12,6 @@ public class Programado implements EstadoVoo {
     String partida = formatador.format(dataPartida);
 
     voo.atualizarHorarioPartidaChegada(voo.getPartida());
-    voo.notificarPassageiros("Olá! Seu voo de código" + voo.getCodigoVoo() + "está programado para partir às" + partida);
+    voo.notifyObservers("Olá! Seu voo de código" + voo.getCodigoVoo() + "está programado para partir às" + partida);
   }
 }

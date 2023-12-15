@@ -5,7 +5,7 @@ import notifications.Contato;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Passageiro {
+public class Passageiro implements Observer {
     private String nome;
     private List<Contato> contatos = new ArrayList<>();
 
@@ -18,8 +18,12 @@ public class Passageiro {
     }
 
     public void comprarBilhete(Voo voo) {
-        // Lógica para comprar bilhete
         voo.adicionarPassageiro(this);
+    }
+
+    @Override
+    public void update(String mensagem) {
+        notificar(mensagem);
     }
 
     public void notificar(String mensagem) {
@@ -27,7 +31,6 @@ public class Passageiro {
     }
 
     public Contato getContatoPreferencial() {
-        // Assumindo que o primeiro contato é o preferencial
         return contatos.isEmpty() ? null : contatos.get(0);
     }
 

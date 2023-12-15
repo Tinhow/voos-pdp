@@ -10,6 +10,6 @@ public class Confirmado implements EstadoVoo {
     Date dataPartida = voo.getPartida();
     SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     String partida = formatador.format(dataPartida);
-    voo.notificarPassageiros("Voo " + voo.getCodigoVoo() + " confirmado para " + partida);
+    voo.notifyObservers("Voo " + voo.getCodigoVoo() + " confirmado para " + partida);
   }
 }
